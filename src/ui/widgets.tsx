@@ -29,14 +29,16 @@ export function MetricCard(props: {
   children?: ReactNode;
 }) {
   return (
-    <article className="card">
-      <div className="metric-kicker">{props.label}</div>
-      <div className="metric-value">{props.value}</div>
-      <div className="row">
-        {props.hint ? <span className="tiny muted">{props.hint}</span> : <span />}
+    <article className="card metric-card">
+      <div>
+        <div className="metric-kicker">{props.label}</div>
+        {props.hint ? <div className="tiny muted">{props.hint}</div> : null}
+        {props.children}
+      </div>
+      <div className="metric-side">
+        <div className="metric-value">{props.value}</div>
         {props.trend ? <Trend kind={props.trend} /> : null}
       </div>
-      {props.children}
     </article>
   );
 }
@@ -71,8 +73,8 @@ export function LineChart({
   tall?: boolean;
 }) {
   const w = 320;
-  const h = tall ? 200 : 140;
-  const pad = 12;
+  const h = tall ? 180 : 130;
+  const pad = 14;
   if (values.length < 2) {
     return <p className="muted tiny">لا يتوفر تاريخ كافٍ للرسم بعد.</p>;
   }
@@ -85,8 +87,13 @@ export function LineChart({
     return `${x},${y}`;
   });
   return (
-    <svg className={`chart ${tall ? "tall" : ""}`} viewBox={`0 0 ${w} ${h}`} role="img">
-      <polyline fill="none" stroke={color} strokeWidth="2.2" points={pts.join(" ")} />
+    <svg
+      className={`chart ${tall ? "tall" : ""}`}
+      viewBox={`0 0 ${w} ${h}`}
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+    >
+      <polyline fill="none" stroke={color} strokeWidth="2.4" points={pts.join(" ")} />
       {labels?.length ? (
         <text x={w - pad} y={h - 2} fill="#93a09a" fontSize="10" textAnchor="end">
           {labels[labels.length - 1]}

@@ -16,7 +16,7 @@ export function World() {
         </div>
         <span className="pill">متبقٍ {MAX_DIPLO_ACTIONS - s.flags.diploActionsThisYear}</span>
       </div>
-      <div className="grid grid-2">
+      <div className="cards-lg">
         {s.nations.map((n) => {
           const stance = stanceFromRelation(n.relation);
           return (
@@ -39,7 +39,7 @@ export function World() {
                 {n.deals.exportBan ? "حظر تصدير" : ""}
               </div>
               <p className="tiny muted">{n.lastAction}</p>
-              <div className="grid grid-2">
+              <div className="action-list">
                 {ACTIONS.map((a) => (
                   <button
                     key={a}

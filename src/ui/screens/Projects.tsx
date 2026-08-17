@@ -2,22 +2,23 @@ import { BUDGET_LABELS, allProjects, fmtMoney, fmtNum, projectDef, reqGaps } fro
 import { useGame } from "../../game/store";
 import { Bar } from "../widgets";
 
+const CATS = ["energy", "industry", "computing", "tech", "education", "infrastructure", "defense"] as const;
+
 export function Projects() {
   const g = useGame();
   const s = g.state!;
-  const cats = ["energy", "industry", "computing", "tech", "education", "infrastructure", "defense"] as const;
   return (
     <div>
       <div className="page-head">
         <div>
           <h2>المشاريع الوطنية</h2>
-          <p>حد أقصى خمسة مشاريع متزامنة. الإنشاء يستغرق سنوات، والتشغيل يبقى بعد الافتتاح.</p>
+          <p>حد أقصى خمسة مشاريع متزامنة. الإنشاء يستغرق سنوات.</p>
         </div>
         <span className="pill">نشط {s.activeProjects.length} / 5</span>
       </div>
 
       {s.activeProjects.length ? (
-        <div className="grid grid-2" style={{ marginBottom: 14 }}>
+        <div className="stack" style={{ marginBottom: 14 }}>
           {s.activeProjects.map((p) => {
             const def = projectDef(p.id);
             if (!def) return null;
@@ -38,13 +39,14 @@ export function Projects() {
         <p className="muted">لا مشاريع قيد الإنشاء.</p>
       )}
 
-      {cats.map((cat) => (
-        <section key={cat} style={{ marginTop: 18 }}>
-          <h3>{cat === "computing" ? "الحوسبة" : cat === "tech" ? "التقنية" : BUDGET_LABELS[cat as keyof typeof BUDGET_LABELS] ?? cat}</h3>
-          <div className="grid grid-2">
-            {allProjects()
-              .filter((p) => p.category === cat)
-              .map((p) => {
+      {CATS.map((cat, i) => {
+        const items = allProjects().filter((p) => p.category === cat);
+        const label = cat === "computing" ? "الحوسبة" : cat === "tech" ? "التقنية" : BUDGET_LABELS[cat as keyof typeof BUDGET_LABELS] ?? cat;
+        return (
+          <details className="accordion" key={cat} open={i === 0}>
+            <summary>{label}</summary>
+            <div className="accordion-body">
+              {items.map((p) => {
                 const done = s.completedProjects.includes(p.id);
                 const active = s.activeProjects.some((a) => a.id === p.id);
                 const check = g.canStart(p.id);
@@ -57,7 +59,7 @@ export function Projects() {
                     </div>
                     <p className="tiny">{p.detail}</p>
                     <div className="tiny muted">
-                      تكلفة {fmtMoney(p.cost)} · {p.duration} سنوات · تشغيل سنوي {fmtMoney(p.opCost)}
+                      تكلفة {fmtMoney(p.cost)} · {p.duration} سنوات · تشغيل {fmtMoney(p.opCost)}
                       {p.energyUse ? ` · كهرباء ${fmtNum(p.energyUse)}` : ""}
                     </div>
                     {p.risk ? <div className="tiny">مخاطرة: {p.risk}</div> : null}
@@ -70,9 +72,10 @@ export function Projects() {
                   </article>
                 );
               })}
-          </div>
-        </section>
-      ))}
+            </div>
+          </details>
+        );
+      })}
     </div>
   );
 }

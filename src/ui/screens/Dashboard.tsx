@@ -31,10 +31,10 @@ export function Dashboard() {
         <div>
           <h2>رئاسة مجلس الوزراء</h2>
           <p>
-            {s.countryName} · العاصمة {s.capitalName} · السنة {s.year} · العهد في عامه {s.turn + 1}
+            {s.countryName} · {s.capitalName} · السنة {s.year}
           </p>
         </div>
-        <button className="btn" onClick={() => setScreen("decisions")}>
+        <button className="btn primary" onClick={() => setScreen("decisions")}>
           القرارات ({s.pendingDecisions.length})
         </button>
       </div>
@@ -45,7 +45,7 @@ export function Dashboard() {
         </div>
       ))}
 
-      <div className="grid grid-4">
+      <div className="stack">
         <MetricCard label="الناتج المحلي الإجمالي" value={fmtMoney(s.gdp)} hint={`نمو ${fmtSignedPct(s.gdpGrowth)}`} trend={trendOf(s.gdp, prev?.gdp)} />
         <MetricCard label="الميزانية" value={fmtMoney(s.deficit)} hint={s.deficit > 0 ? "عجز" : "فائض"} trend={trendOf(s.deficit, prev ? prev.expenditure - prev.revenue : undefined, true)} />
         <MetricCard label="الدين العام" value={fmtMoney(s.debt)} hint={`نسبة الدين ${fmtPct(debtRatio(s))}`} trend={trendOf(debtRatio(s), prev?.debtRatio, true)} />
@@ -60,7 +60,7 @@ export function Dashboard() {
         <MetricCard label="القوة العسكرية" value={fmtNum(s.militaryPower)} hint={`نفوذ ${fmtNum(s.influence)}`} trend={trendOf(s.militaryPower, prev?.military)} />
       </div>
 
-      <div className="grid grid-2" style={{ marginTop: 14 }}>
+      <div className="stack" style={{ marginTop: 14 }}>
         <article className="card">
           <h3>مسار الناتج</h3>
           <LineChart values={hist.map((h) => h.gdp)} labels={hist.map((h) => String(h.year))} tall />

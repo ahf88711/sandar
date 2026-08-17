@@ -11,7 +11,7 @@ export function Settings() {
           <p>الحفظ محلي على هذا الجهاز. يُحفظ تلقائياً بعد كل قرار أو سنة.</p>
         </div>
       </div>
-      <div className="grid grid-2">
+      <div className="stack">
         <article className="card stack">
           <h3>الحفظ</h3>
           <p className="tiny muted">

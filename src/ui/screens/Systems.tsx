@@ -19,7 +19,7 @@ export function Energy() {
   const tone = reserve < 0 ? "danger" : reserve < 0.08 ? "warn" : undefined;
   return (
     <Page title="الطاقة" lead="بلا كهرباء كافية تتوقف المصانع وتختنق الحوسبة ويتآكل الرضا.">
-      <div className="grid grid-3">
+      <div className="stack">
         <MetricCard label="قدرة التوليد" value={`${fmtNum(cap)} غيغاواط`} hint={`أحفوري ${fmtNum(s.fossilCapacity)} · متجدد ${fmtNum(s.renewableCapacity)}`} />
         <MetricCard label="الاستهلاك" value={`${fmtNum(s.energyDemand)} غيغاواط`} />
         <MetricCard label="هامش الاحتياطي" value={fmtPct(reserve)} />
@@ -47,7 +47,7 @@ export function Industry() {
   return (
     <Page title="الصناعة" lead="كل فرع صناعي يشترط طاقة وبنية وتعليماً وتقنية. القفز للرقائق دون أساس يهدر المال.">
       <MetricCard label="القدرة الصناعية" value={fmtPoints(s.industrialCapacity)} hint={`سلاسل التوريد ${fmtPoints(s.supplyChain)}`} />
-      <div className="grid grid-2" style={{ marginTop: 14 }}>
+      <div className="stack" style={{ marginTop: 14 }}>
         {INDUSTRY_KEYS.map((k) => (
           <article className="card" key={k}>
             <div className="row">
@@ -66,7 +66,7 @@ export function Tech() {
   const s = useGame().state!;
   return (
     <Page title="التقنية والذكاء الاصطناعي" lead="الذكاء الاصطناعي يحتاج كهرباء وحوسبة ورقائق وكفاءات وبحثاً معاً. الأتمتة السريعة تربك سوق العمل.">
-      <div className="grid grid-3">
+      <div className="stack">
         <MetricCard label="مستوى التقنية" value={fmtPoints(s.technology)} />
         <MetricCard label="البحث" value={fmtPoints(s.research)} />
         <MetricCard label="القدرة الحاسوبية" value={fmtPoints(s.computing)} />
@@ -86,12 +86,12 @@ export function Defense() {
   const s = useGame().state!;
   return (
     <Page title="الدفاع" lead="ردع واستقلال تصنيع، لا محاكاة معارك. كل مليار هنا لا يذهب إلى مدرسة أو محطة.">
-      <div className="grid grid-3">
+      <div className="stack">
         <MetricCard label="القوة العسكرية" value={fmtPoints(s.militaryPower)} />
         <MetricCard label="الردع" value={fmtPoints(s.deterrence)} />
         <MetricCard label="التوتر الإقليمي" value={fmtPoints(s.flags.tension)} />
       </div>
-      <div className="grid grid-2" style={{ marginTop: 14 }}>
+      <div className="stack" style={{ marginTop: 14 }}>
         {(Object.keys(DEFENSE_LABELS) as (keyof typeof DEFENSE_LABELS)[]).map((k) => (
           <article className="card" key={k}>
             <div className="row">
@@ -111,7 +111,7 @@ export function Education() {
   const delayed = s.delayedEffects.filter((e) => e.deltas.humanCapital || e.deltas.research);
   return (
     <Page title="التعليم ورأس المال البشري" lead="الاستثمار التعليمي غالٍ اليوم ومثمر بعد سنوات. بدونه تتعطل الرقائق والذكاء الاصطناعي والصناعة المتقدمة.">
-      <div className="grid grid-3">
+      <div className="stack">
         <MetricCard label="رأس المال البشري" value={fmtPoints(s.humanCapital)} />
         <MetricCard label="جودة التعليم" value={fmtPoints(s.educationQuality)} />
         <MetricCard label="البحث" value={fmtPoints(s.research)} />
@@ -148,7 +148,7 @@ export function Infrastructure() {
   return (
     <Page title="البنية التحتية" lead="الطرق والموانئ والشبكة الرقمية تخفض كلفة كل شيء آخر.">
       <MetricCard label="مؤشر البنية" value={fmtPoints(s.infrastructure)} />
-      <div className="grid grid-2" style={{ marginTop: 14 }}>
+      <div className="stack" style={{ marginTop: 14 }}>
         {rows.map(([label, v]) => (
           <article className="card" key={label}>
             <div className="row">

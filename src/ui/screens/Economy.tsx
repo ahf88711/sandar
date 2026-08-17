@@ -25,14 +25,14 @@ export function Economy() {
           <p>الضريبة والإنفاق يحددان هامش المناورة. العجز اليوم دين وخدمة غداً.</p>
         </div>
       </div>
-      <div className="grid grid-4">
+      <div className="stack">
         <MetricCard label="الإيرادات" value={fmtMoney(s.revenue)} trend={trendOf(s.revenue, prev?.revenue)} />
         <MetricCard label="المصروفات" value={fmtMoney(s.expenditure)} trend={trendOf(s.expenditure, prev?.expenditure, true)} />
         <MetricCard label={s.deficit >= 0 ? "العجز" : "الفائض"} value={fmtMoney(Math.abs(s.deficit))} />
         <MetricCard label="نسبة الدين إلى الناتج" value={fmtPct(debtRatio(s))} trend={trendOf(debtRatio(s), prev?.debtRatio, true)} />
       </div>
 
-      <div className="grid grid-2" style={{ marginTop: 14 }}>
+      <div className="cards-lg" style={{ marginTop: 14 }}>
         <article className="card stack">
           <h3>أدوات السياسة</h3>
           <Slider label="معدل الضريبة" min={0.08} max={0.4} step={0.002} value={s.taxRate} display={fmtPct(s.taxRate)} onChange={g.updateTax} />

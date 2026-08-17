@@ -12,7 +12,7 @@ export function YearReportModal() {
       <div className="modal">
         <h2 id="yr-title">تقرير سنة {r.year}</h2>
         <p className="muted">ملخص ما تغيّر ولماذا، قبل الانتقال إلى قرارات العام الجديد.</p>
-        <div className="grid grid-3" style={{ margin: "14px 0" }}>
+        <div className="stack" style={{ margin: "14px 0" }}>
           <div className="card">
             <div className="metric-kicker">الناتج</div>
             <div className="metric-value">{fmtMoney(r.gdpAfter)}</div>
@@ -42,7 +42,7 @@ export function YearReportModal() {
             {r.industryDelta.toFixed(1)}
           </p>
         </div>
-        <div className="row" style={{ marginTop: 16 }}>
+        <div className="modal-actions">
           <span className="muted tiny">السكان {r.populationBefore.toFixed(1)} → {r.populationAfter.toFixed(1)} مليون</span>
           <button className="btn primary" onClick={g.closeReport}>
             متابعة
@@ -82,7 +82,7 @@ export function GameOverModal() {
         <p className="pill">{e.type === "victory" ? "نهاية العهد: نجاح" : "نهاية العهد: إخفاق"}</p>
         <h2>{e.title}</h2>
         <p>{e.body}</p>
-        <div className="row" style={{ marginTop: 18 }}>
+        <div className="modal-actions row">
           <button className="btn" onClick={g.backToMenu}>
             القائمة
           </button>
@@ -128,7 +128,7 @@ export function TutorialModal() {
         <p className="tiny muted">دليل {step + 1} / {pages.length}</p>
         <h2>{page.title}</h2>
         <p>{page.body}</p>
-        <div className="row" style={{ marginTop: 16 }}>
+        <div className="modal-actions row">
           <button className="btn ghost" onClick={() => g.setTutorial(false)}>
             إغلاق
           </button>

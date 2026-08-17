@@ -13,7 +13,7 @@ export function Stats() {
           <p>سلاسل زمنية تساعد على قراءة الاتجاه لا الزينة.</p>
         </div>
       </div>
-      <div className="grid grid-2">
+      <div className="cards-lg">
         <article className="card">
           <h3>الناتج المحلي</h3>
           <LineChart values={h.map((x) => x.gdp)} tall />
